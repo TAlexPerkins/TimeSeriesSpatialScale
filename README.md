@@ -3,7 +3,7 @@
 
 This repository contains code related to the following preprint:
 
-TA Perkins<sup>&#10033;</sup>, I Rodriguez-Barraquer<sup>&#10033;</sup>, C Manore<sup>&#10033;</sup>, AS Siraj, G España, CM Barker, MA Johansson, RC Reiner<sup>&#10033;</sup>. 2018. **Heterogeneous local dynamics revealed by classification analysis of spatially disaggregated time series data.** *bioRxiv* doi:[10.1101/276006](https://www.biorxiv.org/content/early/2018/03/05/276006)
+TA Perkins<sup>&#42;</sup>, I Rodriguez-Barraquer<sup>&#42;</sup>, C Manore<sup>&#42;</sup>, AS Siraj, G España, CM Barker, MA Johansson, RC Reiner<sup>&#42;</sup>. 2018. **Heterogeneous local dynamics revealed by classification analysis of spatially disaggregated time series data.** *bioRxiv* doi:[10.1101/276006](https://www.biorxiv.org/content/early/2018/03/05/276006)
 
 All code contained within this repository is released under the [CRAPL v0.1 License](http://matt.might.net/articles/crapl/).
 
