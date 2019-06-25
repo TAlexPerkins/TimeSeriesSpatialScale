@@ -485,7 +485,7 @@ for(jj in (1:ncol(cases))[-which.zero][medoids]){
   lines(
     -curve.data[jj,1]+(1:58),
     cases.norm.cum[,jj],
-    type='l',col=gg_color_hue(k,cluster,alpha=1),lwd=2)
+    type='l',col=gg_color_hue(k,cluster,alpha=1),lwd=3)
   cluster = cluster + 1
 }
 axis(2,cex.axis=0.6,at=seq(0,1,0.2),las=1)
@@ -511,11 +511,54 @@ for(jj in (1:ncol(cases))[-which.zero][medoids]){
   lines(
     -curve.data[jj,1]+(1:58),
     cases.norm.cum[,jj],
-    type='l',col=gg_color_hue(k,cluster,alpha=1),lwd=2)
+    type='l',col=gg_color_hue(k,cluster,alpha=1),lwd=3)
   cluster = cluster + 1
 }
 axis(1,cex.axis=0.6,at=seq(-52,52,13),label=c('-52','','-26','','0','','26','','52'))
 mtext('Number of groups = 3',3,line=0.5,cex=0.7)
+
+dev.off()
+
+
+
+# plot the medoid centered, normalized cumulative incidence curves for each of 2 groups with fitted normal curves
+jpeg(paste('../../output/2_classification/dept/pca_curves_medoid_dept_normal.jpeg',sep=''),width=6.5,height=3.5,units='in',res=500)
+
+layout(matrix(1:2,1,2,byrow=T))
+par(mar=rep(0.2,4),oma=c(3.5,3.6,1.5,1.5))
+
+k = 2
+clusters = pam(scale(data.frame(curve.data[-which.zero,2:7])),k)$clustering
+medoids = pam(scale(data.frame(curve.data[-which.zero,2:7])),k)$id.med
+sil.data = silhouette(pam(scale(data.frame(curve.data[-which.zero,c(2:7)])),k))
+sil.data[as.numeric(row.names(sil.data[,])),] = sil.data
+row.names(sil.data) = sort(row.names(sil.data))
+sil.max = max(sil.data[,3])
+
+cluster = 1
+for(jj in (1:ncol(cases))[-which.zero][medoids]){
+  plot(-1000,xlim=c(-52,52),ylim=c(0,1),xaxt='n',yaxt='n',yaxs='i');box()
+  polygon(c(-1e3,1e3,1e3,-1e3),c(-1e3,-1e3,1e3,1e3),col=rgb(0,0,0,0.6))
+  abline(v=seq(-52,52,13),col='gray')
+  abline(h=seq(0,1,0.2),col='gray')
+  lines(
+    -curve.data[jj,1]+(1:58),
+    pnorm(
+      -curve.data[jj,1]+(1:58),
+      0, curve.data[jj,2]),
+    col='white',lwd=3)
+  lines(
+    -curve.data[jj,1]+(1:58),
+    cases.norm.cum[,jj],
+    type='l',col=gg_color_hue(k,cluster,alpha=1),lwd=3)
+  if(cluster == 1){
+    axis(2,cex.axis=0.6,at=seq(0,1,0.2),las=1)
+    mtext('Cumulative proportion of infections',2,line=2.5,cex=0.7)
+    mtext('Week relative to mean of fitted normal',1,line=2.25,cex=0.7,at=58)
+  }
+  axis(1,cex.axis=0.6,at=seq(-52,52,13),label=c('-52','','-26','','0','','26','','52'))
+  cluster = cluster + 1
+}
 
 dev.off()
 
